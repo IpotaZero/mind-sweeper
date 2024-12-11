@@ -1,0 +1,90 @@
+html,
+body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    background-color: #111;
+    transition: all 2.5s;
+    box-shadow: inset 0px 0px 96px -22px #ffffff20;
+
+    font-display: swap;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* background-image: url("images/bg_body.png"); */
+    background-size: 100px;
+    opacity: 0.05;
+}
+
+.img77 {
+    height: 300px;
+    left: calc(50% - 400px);
+    position: fixed;
+    display: none;
+}
+
+#canvas-container {
+    width: fit-content;
+    height: 320px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.5s;
+    z-index: 1000;
+}
+
+#canvas-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    background-color: #fcfcfc;
+}
+
+.canvas {
+    height: 100%;
+    border: 1px azure solid;
+    position: absolute;
+    transition: all 2.5s;
+    box-shadow: inset 0px 0px 96px -22px #000000c0;
+}
+
+@font-face {
+    font-family: Poiret One;
+    src: url("fonts/PoiretOne-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: Klee One;
+    src: url("fonts/KleeOne-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: Maven Pro;
+    src: url("fonts/MavenPro-VariableFont_wght.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: noto;
+    src: url("NotoSans-VariableFont_wdth\,wght.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: anzu;
+    src: url("APJapanesefontT.ttf") format("truetype");
+}
