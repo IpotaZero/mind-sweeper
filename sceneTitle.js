@@ -10,12 +10,10 @@ const sceneTitle = new (class {
             new RegExDict({
                 "": ["つづきから", "はじめから", "ぜんぶわすれる"],
                 "2": ["うん", "!やっぱやめる"],
-                "3": ["みる", "!やっぱやめる"],
             }),
             {
                 titles: new RegExDict({
                     "2": "ほんとに?",
-                    "3": "人前で見ない方が良いかも",
                 }),
                 text_align: "center",
             },
@@ -49,7 +47,7 @@ const sceneTitle = new (class {
 
     loop() {
         // bg_title.draw(ctxMain)
-        Irect(ctxMain, "#11111170", 0, 0, width, height, { line_width: 0 })
+        Irect(ctxMain, "#111111", 0, 0, width, height, { line_width: 0 })
 
         ctxMain.save()
 
@@ -84,7 +82,7 @@ const sceneTitle = new (class {
             this.command.cancel(2)
         } else if (this.command.is_match("21|31")) {
             this.command.cancel(2)
-        } else if (this.command.is_match("30")) {
+        } else if (this.command.is_match("3")) {
             mine_273.draw(ctxMain)
         }
     }

@@ -9,19 +9,24 @@ const changeScene = (scene, ms = 500) => {
     container.style.transition = `all ${ms / 1000}s`
     container.style.opacity = 0
 
-    setTimeout(async () => {
-        
+    container.ontransitionend = async () => {
+        container.ontransitionend = null
+        ctxMain.clearRect(0, 0, width, height)
 
-        container.style.opacity = 1
         await scene.start?.()
 
+        container.style.transition = `all ${ms / 1000}s`
+        container.style.opacity = 1
         currentScene = scene
         canInput = true
-    }, ms)
+    }
 }
 
 const sceneDark = new (class {
     constructor() {}
+    start() {
+        this.frame = 0
+    }
     loop() {}
 })()
 

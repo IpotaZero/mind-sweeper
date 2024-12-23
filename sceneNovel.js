@@ -129,7 +129,7 @@ const sceneNovel = new (class {
     }
 
     async start() {
-        this.isEndLoop = true
+        this.isEndNovel = true
         this.startBGM()
         this.story = story[storyId]()
         await this.getNextText()
@@ -156,10 +156,10 @@ const sceneNovel = new (class {
             }
 
             // novelの処理が終わるまで次のnovelを呼ばせない
-            if (!this.isEndLoop) return
-            this.isEndLoop = false
+            if (!this.isEndNovel) return
+            this.isEndNovel = false
             this.getNextText().then(() => {
-                this.isEndLoop = true
+                this.isEndNovel = true
             })
         }
     }

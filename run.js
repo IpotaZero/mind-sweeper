@@ -10,10 +10,10 @@ let BGM = bgm_title
 
 let frame = 0
 
-let now = Date.now()
+// let now = Date.now()
 
-const mainloop = async () => {
-    const pre = Date.now()
+const mainloop = () => {
+    // const pre = Date.now()
 
     cvsSub.style.cursor = ""
     ctxMain.shadowBlur = 0
@@ -25,7 +25,10 @@ const mainloop = async () => {
     // Itext(ctxMain, "#111", "Poiret One", 48, 0, height, Math.floor(1000 / (pre - now)), {
     //     baseline: "bottom",
     // })
-    now = pre
+
+    // console.log(getComputedStyle(document.getElementById("canvas-container")).opacity)
+
+    // now = pre
 
     // Iarc(ctxMain, "azure", mouse.p.x, mouse.p.y, 6)
     // Iarc(ctxMain, "azure", width/2, height/2, 6)
