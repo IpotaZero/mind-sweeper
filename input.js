@@ -41,7 +41,7 @@ document.addEventListener("keyup", (e) => {
     keyUp(e)
 })
 
-const cvsStyle = getComputedStyle(cvsSub)
+const cvsStyle = getComputedStyle(document.querySelector("#canvas-container"))
 
 document.querySelector("#canvas-container").addEventListener(
     "mousemove",

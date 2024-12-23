@@ -165,30 +165,37 @@ const IBGM = class {
 
     // 周波数データを描画するメソッド
     drawLineFrequency(ctx, colour, x, y, width, height) {
-        if (this.context.state == "suspended") return
+        // AudioContext が停止状態の場合は終了
+        if (this.context.state === "suspended") return
 
-        const buffer_length = this.analyser.frequencyBinCount
-        const data_array = new Uint8Array(buffer_length)
-        this.analyser.getByteFrequencyData(data_array)
+        // 周波数データを取得
+        const bufferLength = this.analyser.frequencyBinCount
+        const dataArray = new Uint8Array(bufferLength)
+        this.analyser.getByteFrequencyData(dataArray)
 
+        // 描画の設定を保存
         ctx.save()
 
-        ctx.strokeStyle = colour // 色を変更
+        // 線の色と幅を設定
+        ctx.strokeStyle = colour
         ctx.lineWidth = 2
 
-        const d = 16
-        const lv = 1.5
-        const bar_height = (radius_ex - radius_in) / lv / d
-        const bar_width = width / d
+        // 波形の描画を開始
+        ctx.beginPath()
+        const barWidth = width / bufferLength // 各棒の幅
 
-        for (let i = 0; i < buffer_length; i++) {
-            const num = Math.floor(data_array[i] / (256 / d)) // 高さを周波数データに基づいて決定
+        for (let i = 0; i < bufferLength; i++) {
+            const value = dataArray[i]
+            const barHeight = (value / 255) * height // データを高さに変換
 
-            for (let j = 0; j < num; j++) {
-                ctx.strokeRect(x + bar_width * j, y + bar_height * i)
-            }
+            const barX = x + i * barWidth
+            const barY = y + height - barHeight
+
+            ctx.moveTo(barX, y + (height - barHeight) / 2)
+            ctx.lineTo(barX, y + (height + barHeight) / 2)
         }
 
+        ctx.stroke()
         ctx.restore()
     }
 }

@@ -11,6 +11,7 @@ const scenePretitle = new (class {
 
         if (mouse.clicked || keyboard.pushed.size > 0) {
             se_open.play()
+
             changeScene(sceneTitle, 2500)
         }
     }

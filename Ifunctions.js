@@ -204,7 +204,7 @@ const Itext = (
     ctx.globalAlpha = 1
 
     if (se != null) {
-        if (frame < text.length) se.play()
+        if (frame < text.length && frame % 1 == 0) se.play()
     }
 
     ctx.restore()

@@ -9,8 +9,7 @@ const story = [
         yield "今日も意味不明なことを喚いています"
         yield "「あ、あああ」"
         yield "おや、どうしたのでしょう"
-        yield "「わあああああああ!!!!」"
-        yield "「死ね!死ね!死ね!死ね!」"
+        yield "「死ね、頼むから、死んでくれ」"
         yield "どうやら嫌なことを思い出してしまったようです"
         yield "心の地雷を取り除いて嫌な記憶を忘れさせてあげましょう"
         sceneMain.mines = 9
@@ -19,6 +18,7 @@ const story = [
     },
     async function* () {
         localStorage.setItem("storyId", storyId)
+        sceneNovel.background = mine_1
 
         yield "「あれ、なんだっけ」"
         yield "無事に忘れさせられましたね"
@@ -59,7 +59,7 @@ const story = [
     async function* () {
         localStorage.setItem("storyId", storyId)
 
-        sceneNovel.background = mine_5
+        sceneNovel.background = backpack
         yield "「小学校の修学旅行、どこに行ったか、覚えてるかな?」"
         yield "「私はもう忘れてしまいました」"
         yield "「思い出は、削れて無くなっていくのです」"
@@ -82,8 +82,22 @@ const story = [
         yield "「3番目に忘れたいことは、」"
         yield "「今でも殺意を抱かせます」"
         yield "おお、こわいこわい"
-        sceneMain.mines = 25
-        sceneMain.size = 15
+        sceneMain.mines = 32
+        sceneMain.size = 17
+        changeScene(sceneMain)
+    },
+    async function* () {
+        rotateCanvas(0, 0)
+        localStorage.setItem("storyId", storyId)
+
+        sceneNovel.background = pillow
+        yield "「お風呂に入っている時とか、」"
+        yield "「自転車に乗っている時、」"
+        yield "「何もしていないときに、記憶が蘇るから、」"
+        yield "「何かしていないと落ち着かないのです」"
+        yield ""
+        sceneMain.mines = 40
+        sceneMain.size = 19
         changeScene(sceneMain)
     },
     async function* () {
@@ -109,12 +123,23 @@ const sceneNovel = new (class {
         await this.getNextText()
     }
 
+    async startBGM() {
+        await BGM.fade(0.01, 1)
+        BGM.pause()
+    }
+
     async start() {
+        this.isEndLoop = true
+        this.startBGM()
         this.story = story[storyId]()
         await this.getNextText()
     }
 
-    loop() {
+    async loop() {
+        if (!this.isEndLoop) return
+
+        this.isEndLoop = false
+
         Irect(ctxMain, "#111", 0, 0, width, height, { line_width: 0 })
 
         this.background.draw(ctxMain)
@@ -125,16 +150,18 @@ const sceneNovel = new (class {
             letter_spacing: "-3px",
             frame: this.frame++ / 3,
             max_width: width - 40,
+            // se: se_voice,
         })
 
         if (keyboard.pushed.has("ok") || mouse.clicked) {
             if (this.text.length > this.frame / 3) {
                 this.frame = this.text.length * 3
-                return
+            } else {
+                await this.getNextText()
             }
-
-            this.getNextText()
         }
+
+        this.isEndLoop = true
     }
 
     async getNextText() {

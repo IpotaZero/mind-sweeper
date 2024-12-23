@@ -9,10 +9,13 @@ const changeScene = (scene, ms = 500) => {
     container.style.transition = `all ${ms / 1000}s`
     container.style.opacity = 0
 
-    setTimeout(() => {
-        currentScene = scene
-        currentScene.start?.()
+    setTimeout(async () => {
+        
+
         container.style.opacity = 1
+        await scene.start?.()
+
+        currentScene = scene
         canInput = true
     }, ms)
 }

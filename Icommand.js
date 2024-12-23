@@ -200,7 +200,7 @@ const Icommand = class {
             },
         )
 
-        if (hovered) this.num = i
+        if (hovered && mouse.moved) this.num = i
 
         this.solve_scroll(x, y, width)
 

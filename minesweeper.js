@@ -12,6 +12,7 @@ class Minesweeper {
         this.revealed = []
         this.flagged = []
         this.gameOver = false
+        this.cleared = false
 
         this.firstClick = true // 最初のクリックかどうかを判定するフラグ
 
@@ -227,11 +228,13 @@ class Minesweeper {
     }
 
     onHovered(x, y) {
-        const c = Math.floor(x / (this.canvas.width / this.rows))
-        const r = Math.floor(y / (this.canvas.height / this.cols))
-        this.drawGrid()
+        const col = Math.floor(x / (this.canvas.width / this.rows))
+        const row = Math.floor(y / (this.canvas.height / this.cols))
 
-        this.cursor = [c, r]
+        if (row < 0 || row >= this.rows || col < 0 || col >= this.cols) return
+
+        this.cursor = [col, row]
+        this.drawGrid()
     }
 
     moveCursor(x, y) {
@@ -249,6 +252,9 @@ class Minesweeper {
 
         this.revealCell(this.cursor[1], this.cursor[0])
         this.drawGrid()
+
+        // 開けられたマスの数=グリッド-地雷数
+        this.cleared = this.revealed.flat().filter((b) => b).length == this.rows * this.cols - this.mineCount
     }
 
     onX() {

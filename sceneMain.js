@@ -34,7 +34,22 @@ const sceneMain = new (class {
         this.size = 9
     }
 
+    async startBGM() {
+        if (BGM != bgm_mine) {
+            await BGM.fade(0.01, 1)
+            BGM.pause()
+        }
+
+        BGM = bgm_mine
+        BGM.setVolume(0.5)
+        await BGM.fetch()
+        BGM.reset()
+        await BGM.play()
+    }
+
     start() {
+        this.startBGM()
+
         this.cvs = document.createElement("canvas")
         this.cvs.width = 600
         this.cvs.height = 600
@@ -42,7 +57,7 @@ const sceneMain = new (class {
         // Create a Minesweeper instance
         this.minesweeper = new Minesweeper(this.cvs, this.size, this.size, this.mines)
 
-        ctxMain.drawImage(this.cvs, (1280 - 600) / 2, (720 - 600) / 2)
+        // ctxMain.drawImage(this.cvs, (1280 - 600) / 2, (720 - 600) / 2)z
 
         this.mode = "mine"
 
@@ -80,7 +95,7 @@ const sceneMain = new (class {
         Itext(ctxMain, "azure", "anzu", 48, 60, 100, `のこり: ${this.minesweeper.remainingMines}`)
         Itext(ctxMain, "azure", "anzu", 36, 60, 670, this.serif)
 
-        if (this.minesweeper.trueRemainingMines == 0 && this.minesweeper.remainingMines == 0) {
+        if (this.minesweeper.cleared) {
             // console.log("clear")
             const clicked = Ibutton(ctxMain, "azure", "anzu", 48, 1010, 600, 200, 55, "すすむ", {
                 text_align: "center",
@@ -94,6 +109,8 @@ const sceneMain = new (class {
         }
 
         Itext(ctxMain, "azure", "anzu", 48, 60, 600, `たいむ: ${Math.floor(this.timeCount++ / 60)}`)
+
+        BGM.drawLineFrequency(ctxMain, "#f0ffff80", 1220, 300, -300, 200)
     }
 
     modeMine() {
@@ -103,12 +120,12 @@ const sceneMain = new (class {
         if (mouse.clicked) {
             if (0 <= x && x <= 600 && 0 <= y && y <= 600) {
                 this.minesweeper.onZ()
-                se_turn.play()
+                // se_turn.play()
             }
         } else if (mouse.rightClicked) {
             if (0 <= x && x <= 600 && 0 <= y && y <= 600) {
                 this.minesweeper.onX()
-                se_flag.play()
+                // se_flag.play()
             }
             const serif = serifs[storyId]
             this.serif = serif[Math.floor(serif.length * Math.random())]
@@ -118,28 +135,30 @@ const sceneMain = new (class {
 
         if (keyboard.longPressed.has("ArrowRight")) {
             this.minesweeper.moveCursor(1, 0)
-            se_select.play()
+            // se_select.play()
         } else if (keyboard.longPressed.has("ArrowLeft")) {
             this.minesweeper.moveCursor(-1, 0)
-            se_select.play()
+            // se_select.play()
         } else if (keyboard.longPressed.has("ArrowUp")) {
             this.minesweeper.moveCursor(0, -1)
-            se_select.play()
+            // se_select.play()
         } else if (keyboard.longPressed.has("ArrowDown")) {
             this.minesweeper.moveCursor(0, 1)
-            se_select.play()
+            // se_select.play()
         } else if (keyboard.longPressed.has("KeyZ")) {
             this.minesweeper.onZ()
-            se_turn.play()
+            // se_turn.play()
         } else if (keyboard.longPressed.has("KeyX")) {
             this.minesweeper.onX()
-            se_flag.play()
+            // se_flag.play()
             const serif = serifs[storyId]
             this.serif = serif[Math.floor(serif.length * Math.random())]
         }
 
         if (this.minesweeper.gameOver) {
             rotateCanvas(4)
+
+            BGM.pause()
 
             this.mode = "gameOver"
             this.frame = 0
@@ -152,7 +171,7 @@ const sceneMain = new (class {
 
         if (clicked) {
             this.mode = "pen"
-            se_pen.play()
+            // se_pen.play()
         }
     }
 
@@ -187,11 +206,11 @@ const sceneMain = new (class {
         if (clicked_sw) {
             this.mode = "mine"
             this.prePosition = null
-            se_pen.play()
+            // se_pen.play()
         }
 
         if (clicked_clear) {
-            se_erase.play()
+            // se_erase.play()
             ctxSub.clearRect(0, 0, width, height)
         }
     }

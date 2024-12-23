@@ -10,10 +10,12 @@ const sceneTitle = new (class {
             new RegExDict({
                 "": ["つづきから", "はじめから", "ぜんぶわすれる"],
                 "2": ["うん", "!やっぱやめる"],
+                "3": ["みる", "!やっぱやめる"],
             }),
             {
                 titles: new RegExDict({
                     "2": "ほんとに?",
+                    "3": "人前で見ない方が良いかも",
                 }),
                 text_align: "center",
             },
@@ -22,16 +24,32 @@ const sceneTitle = new (class {
         this.frame = 0
     }
 
+    async startBGM() {
+        if (BGM.isPlaying()) {
+            await BGM.fade(0.01, 1)
+            BGM.pause()
+        }
+
+        BGM = bgm_title
+        BGM.setVolume(0.5)
+        await BGM.fetch()
+        BGM.reset()
+        await BGM.play()
+    }
+
     start() {
         const options = ["つづきから", "はじめから", "ぜんぶわすれる"]
 
-        if (localStorage.getItem("storyId") == "5") options.push("おまけ")
+        if (localStorage.getItem("storyId") == "6") options.push("おまけ")
 
         this.command.options.dict[""] = options
+
+        this.startBGM()
     }
 
     loop() {
-        Irect(ctxMain, "#111", 0, 0, width, height, { line_width: 0 })
+        // bg_title.draw(ctxMain)
+        Irect(ctxMain, "#11111170", 0, 0, width, height, { line_width: 0 })
 
         ctxMain.save()
 
@@ -64,9 +82,9 @@ const sceneTitle = new (class {
             localStorage.clear()
             changeScene(sceneTitle, 1000)
             this.command.cancel(2)
-        } else if (this.command.is_match("21")) {
+        } else if (this.command.is_match("21|31")) {
             this.command.cancel(2)
-        } else if (this.command.is_match("3")) {
+        } else if (this.command.is_match("30")) {
             mine_273.draw(ctxMain)
         }
     }
