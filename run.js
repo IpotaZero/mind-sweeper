@@ -18,7 +18,7 @@ const mainloop = async () => {
     cvsSub.style.cursor = ""
     ctxMain.shadowBlur = 0
 
-    await currentScene.loop()
+    currentScene.loop()
 
     if (currentScene != sceneDark) texture.draw(ctxMain, { alpha: 0.1 })
 

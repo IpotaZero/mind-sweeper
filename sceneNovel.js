@@ -135,11 +135,7 @@ const sceneNovel = new (class {
         await this.getNextText()
     }
 
-    async loop() {
-        if (!this.isEndLoop) return
-
-        this.isEndLoop = false
-
+    loop() {
         Irect(ctxMain, "#111", 0, 0, width, height, { line_width: 0 })
 
         this.background.draw(ctxMain)
@@ -156,12 +152,16 @@ const sceneNovel = new (class {
         if (keyboard.pushed.has("ok") || mouse.clicked) {
             if (this.text.length > this.frame / 3) {
                 this.frame = this.text.length * 3
-            } else {
-                await this.getNextText()
+                return
             }
-        }
 
-        this.isEndLoop = true
+            // novelの処理が終わるまで次のnovelを呼ばせない
+            if (!this.isEndLoop) return
+            this.isEndLoop = false
+            this.getNextText().then(() => {
+                this.isEndLoop = true
+            })
+        }
     }
 
     async getNextText() {
