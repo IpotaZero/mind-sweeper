@@ -1,7 +1,11 @@
 const story = [
     async function* () {
-        sceneNovel.background = mine_1
+        sceneNovel.background = null
+        yield "これはある種の、懺悔です"
+        yield "弱い私の、独り言です"
+        await darken(2500)
 
+        sceneNovel.background = mine_1
         yield "「ふんふふんふふーん、ふんふふんふふーん」"
         yield "「ゲシュタルトかな? プラモデルかな?」"
         yield "まいんちゃん、楽しそうですね"
@@ -27,6 +31,7 @@ const story = [
         await darken(500)
         sceneNovel.background = mine_4
         yield "「まいんちゃんは天才なので、勉強ができます」"
+        yield "「いっひ、びん、しゅつでんてぃん」"
         yield "何言ってるんでしょうね"
         yield "「.......」"
         yield "「中学生の頃、」"
@@ -61,6 +66,7 @@ const story = [
 
         sceneNovel.background = backpack
         yield "「小学校の修学旅行、どこに行ったか、覚えてるかな?」"
+        yield "君と同じところさ"
         yield "「私はもう忘れてしまいました」"
         yield "「思い出は、削れて無くなっていくのです」"
         yield "「忘れたいことは忘れられないくせに」"
@@ -81,6 +87,9 @@ const story = [
         yield "「2番目の忘れたいことは、私の性格になりました」"
         yield "「3番目に忘れたいことは、」"
         yield "「今でも殺意を抱かせます」"
+        yield "「思うに、殺意とは防衛的な感情なのです」"
+        yield "「人は危機に面した時、」"
+        yield "「『殺さなければいけない』と感じるのです」"
         yield "おお、こわいこわい"
         sceneMain.mines = 32
         sceneMain.size = 17
@@ -95,7 +104,10 @@ const story = [
         yield "「自転車に乗っている時、」"
         yield "「何もしていないときに、記憶が蘇るから、」"
         yield "「何かしていないと落ち着かないのです」"
-        yield ""
+        yield "「.......」"
+        yield "「おまえ、おまえ、」"
+        yield "「ゆるして」"
+        yield "許せるのは誰なんだろうね?"
         sceneMain.mines = 40
         sceneMain.size = 19
         changeScene(sceneMain)
@@ -106,6 +118,7 @@ const story = [
         sceneNovel.background = mine_107
         yield "「宝石は研磨されて美しくなるそうです」"
         yield "「私の人生は綺麗になれましたか?」"
+        yield "きっと綺麗になったさ"
         yield "「ふわふわ」"
         yield "「しあわせ」"
         yield "「いいね」"
@@ -124,8 +137,16 @@ const sceneNovel = new (class {
     }
 
     async startBGM() {
-        await BGM.fade(0.01, 1)
-        BGM.pause()
+        if (BGM != bgm_novel) {
+            await BGM.fade(0.01, 1)
+            BGM.pause()
+        }
+
+        BGM = bgm_novel
+        await BGM.fetch()
+        BGM.reset()
+        await BGM.play()
+        BGM.setVolume(0.5)
     }
 
     async start() {
@@ -138,7 +159,7 @@ const sceneNovel = new (class {
     loop() {
         Irect(ctxMain, "#111", 0, 0, width, height, { line_width: 0 })
 
-        this.background.draw(ctxMain)
+        this.background?.draw(ctxMain)
 
         Irect(ctxMain, "#111111c0", 0, 500, width, height - 500, { line_width: 0 })
 

@@ -5,9 +5,7 @@ const changeScene = (scene, ms = 500) => {
 
     canInput = false
 
-    const container = document.querySelector("#canvas-container")
-    container.style.transition = `all ${ms / 1000}s`
-    container.style.opacity = 0
+    canvasContainerTransitionManager.setOpacity(`0`, ms)
 
     container.ontransitionend = async () => {
         container.ontransitionend = null
@@ -15,8 +13,8 @@ const changeScene = (scene, ms = 500) => {
 
         await scene.start?.()
 
-        container.style.transition = `all ${ms / 1000}s`
-        container.style.opacity = 1
+        canvasContainerTransitionManager.setOpacity(`1`, ms)
+
         currentScene = scene
         canInput = true
     }
@@ -33,15 +31,13 @@ const sceneDark = new (class {
 const darken = (ms) => {
     canInput = false
 
-    const container = document.querySelector("#canvas-container")
-    container.style.transition = `all ${ms / 1000}s`
-    container.style.opacity = 0
+    canvasContainerTransitionManager.setOpacity(`0`, ms)
 
     return new Promise((resolve) => {
-        setTimeout(() => {
-            container.style.opacity = 1
+        container.ontransitionend = () => {
+            canvasContainerTransitionManager.setOpacity(`1`, ms)
             canInput = true
             resolve()
-        }, ms)
+        }
     })
 }

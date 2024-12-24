@@ -41,9 +41,9 @@ document.addEventListener("keyup", (e) => {
     keyUp(e)
 })
 
-const cvsStyle = getComputedStyle(document.querySelector("#canvas-container"))
+const cvsStyle = getComputedStyle(container)
 
-document.querySelector("#canvas-container").addEventListener(
+container.addEventListener(
     "mousemove",
     (e) => {
         if (!canInput) return
@@ -82,7 +82,7 @@ const mouse = {
     angle: 0,
 }
 
-document.querySelector("#canvas-container").addEventListener(
+container.addEventListener(
     "mousedown",
     (e) => {
         if (!canInput) return
@@ -115,10 +115,10 @@ const mouseUp = (e) => {
     }
 }
 
-document.querySelector("#canvas-container").addEventListener("mouseup", mouseUp, false)
-document.querySelector("#canvas-container").addEventListener("mouseleave", mouseUp, false)
+container.addEventListener("mouseup", mouseUp, false)
+container.addEventListener("mouseleave", mouseUp, false)
 
-document.querySelector("#canvas-container").addEventListener("wheel", (e) => {
+container.addEventListener("wheel", (e) => {
     mouse.deltaX = e.deltaX
     mouse.deltaY = e.deltaY
 })

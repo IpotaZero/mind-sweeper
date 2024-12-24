@@ -41,9 +41,9 @@ const sceneMain = new (class {
         }
 
         BGM = bgm_mine
-        BGM.setVolume(0.5)
         await BGM.fetch()
         BGM.reset()
+        BGM.setVolume(0.3)
         await BGM.play()
     }
 
@@ -250,16 +250,12 @@ const sceneMain = new (class {
         this.gameOverCommand.run()
 
         if (this.gameOverCommand.is_match("0")) {
-            cvsSub.style.transform = ""
-            cvsMain.style.transform = ""
-            mouse.angle = 0
+            rotateCanvas(0)
 
             changeScene(sceneMain)
             this.gameOverCommand.reset()
         } else if (this.gameOverCommand.is_match("1")) {
-            cvsSub.style.transform = ""
-            cvsMain.style.transform = ""
-            mouse.angle = 0
+            rotateCanvas(0)
 
             changeScene(sceneTitle, 2000)
             this.gameOverCommand.reset()

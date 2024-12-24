@@ -88,6 +88,8 @@ const IBGM = class {
     }
 
     setVolume(volume) {
+        this.gain.gain.cancelScheduledValues(0)
+
         if (volume != null) this.volume = volume
         this.gain.gain.value = this.volume
     }

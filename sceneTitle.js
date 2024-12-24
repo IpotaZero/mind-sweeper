@@ -6,10 +6,11 @@ const sceneTitle = new (class {
             48,
             "azure",
             width / 2,
-            450,
+            430,
             new RegExDict({
-                "": ["つづきから", "はじめから", "ぜんぶわすれる"],
+                "": ["つづきから", "はじめから", "ぜんぶわすれる", "くれじっと"],
                 "2": ["うん", "!やっぱやめる"],
+                "3": "制作: MCR;企画: いぽた;BGM: うめぼし;SE: 効果音ラボ;イラスト: Stable Diffusion",
             }),
             {
                 titles: new RegExDict({
@@ -23,20 +24,20 @@ const sceneTitle = new (class {
     }
 
     async startBGM() {
-        if (BGM.isPlaying()) {
+        if (BGM != bgm_title) {
             await BGM.fade(0.01, 1)
             BGM.pause()
         }
 
         BGM = bgm_title
-        BGM.setVolume(0.5)
         await BGM.fetch()
         BGM.reset()
         await BGM.play()
+        BGM.setVolume(0.3)
     }
 
     start() {
-        const options = ["つづきから", "はじめから", "ぜんぶわすれる"]
+        const options = ["つづきから", "はじめから", "ぜんぶわすれる", "くれじっと"]
 
         if (localStorage.getItem("storyId") == "6") options.push("おまけ")
 
@@ -82,7 +83,7 @@ const sceneTitle = new (class {
             this.command.cancel(2)
         } else if (this.command.is_match("21|31")) {
             this.command.cancel(2)
-        } else if (this.command.is_match("3")) {
+        } else if (this.command.is_match("4")) {
             mine_273.draw(ctxMain)
         }
     }

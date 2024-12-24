@@ -1,8 +1,6 @@
 const width = 1280
 const height = 720
 
-// const cvsContainer = document.querySelector("#canvas-container")
-
 const cvsMain = document.querySelector("#main-canvas")
 cvsMain.width = width
 cvsMain.height = height
@@ -15,17 +13,18 @@ cvsSub.height = height
 
 const ctxSub = cvsSub.getContext("2d")
 
+const container = document.getElementById("canvas-container")
+
 const rotateCanvas = (angle, ms = 2500) => {
-    cvsSub.style.transform = `rotate(${angle}deg)`
-    cvsMain.style.transform = `rotate(${angle}deg)`
-    mouse.angle = (Math.PI / 180) * angle
-
-    cvsSub.style.transition = `all ${ms / 1000}s`
-    cvsMain.style.transition = `all ${ms / 1000}s`
-
-    return new Promise((resolve) => {
-        setTimeout(() => {
+    const promise = new Promise((resolve) => {
+        container.ontransitionend = () => {
             resolve()
-        }, ms)
+        }
     })
+
+    canvasContainerTransitionManager.setTransform(`rotate(${angle}deg)`, ms)
+
+    container.style.transform = mouse.angle = (Math.PI / 180) * angle
+
+    return promise
 }
