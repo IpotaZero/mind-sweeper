@@ -47,8 +47,8 @@ const sceneTitle = new (class {
     }
 
     loop() {
-        // bg_title.draw(ctxMain)
-        Irect(ctxMain, "#111111", 0, 0, width, height, { line_width: 0 })
+        bg_title.draw(ctxMain)
+        // Irect(ctxMain, "#111111", 0, 0, width, height, { line_width: 0 })
 
         ctxMain.save()
 
@@ -81,10 +81,28 @@ const sceneTitle = new (class {
             localStorage.clear()
             changeScene(sceneTitle, 1000)
             this.command.cancel(2)
-        } else if (this.command.is_match("21|31")) {
+        } else if (this.command.is_match("21")) {
             this.command.cancel(2)
+        } else if (this.command.is_match("3")) {
+            const { clicked } = Ibutton(ctxMain, "azure", "anzu", 48, 20, 20, 200, 50, "もどる", {
+                text_align: "center",
+                baseline: "top",
+            })
+            if (clicked) {
+                this.command.cancel(2)
+                se_cancel.play()
+            }
         } else if (this.command.is_match("4")) {
             mine_273.draw(ctxMain)
+
+            const { clicked } = Ibutton(ctxMain, "#111", "anzu", 48, 20, 20, 200, 50, "もどる", {
+                text_align: "center",
+                baseline: "top",
+            })
+            if (clicked) {
+                this.command.cancel(2)
+                se_cancel.play()
+            }
         }
     }
 })()

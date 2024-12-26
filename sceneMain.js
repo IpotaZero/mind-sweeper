@@ -117,12 +117,17 @@ const sceneMain = new (class {
         const x = mouse.p.x - (1280 - 600) / 2
         const y = mouse.p.y - (720 - 600) / 2
 
+        if (mouse.moved) this.minesweeper.onHovered(x, y)
+
         if (mouse.clicked) {
+            this.minesweeper.onHovered(x, y)
+
             if (0 <= x && x <= 600 && 0 <= y && y <= 600) {
                 this.minesweeper.onZ()
                 // se_turn.play()
             }
         } else if (mouse.rightClicked) {
+            this.minesweeper.onHovered(x, y)
             if (0 <= x && x <= 600 && 0 <= y && y <= 600) {
                 this.minesweeper.onX()
                 // se_flag.play()
@@ -130,8 +135,6 @@ const sceneMain = new (class {
             const serif = serifs[storyId]
             this.serif = serif[Math.floor(serif.length * Math.random())]
         }
-
-        if (mouse.moved) this.minesweeper.onHovered(x, y)
 
         if (keyboard.longPressed.has("ArrowRight")) {
             this.minesweeper.moveCursor(1, 0)
@@ -263,4 +266,11 @@ const sceneMain = new (class {
     }
 })()
 
-const serifs = [["高校の自己紹介", "ガラスをひっかく音", "なんで?"], [""], [""], [""], [""], [""]]
+const serifs = [
+    ["高校の自己紹介", "ガラスをひっかく音", "なんで?"],
+    ["指数法則を覚えていますか?", "マウンティング本能", "バカなくせに"],
+    ["ウィキペディアを見て世界の全てを知った気でいるのですか?", "何も知らない、何も知らない", "ママに自慢してみなよ"],
+    ["ヒロシマ", "ホッカイドー", "キョウト"],
+    ["キス・ミー", "自慰行為", "嫌いな人"],
+    ["お風呂場から30分間動けない", "考え事が止まらなくて眠れない", "自転車の上で叫びそうになる"],
+]

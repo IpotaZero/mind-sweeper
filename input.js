@@ -43,32 +43,32 @@ document.addEventListener("keyup", (e) => {
 
 const cvsStyle = getComputedStyle(container)
 
-container.addEventListener(
-    "mousemove",
-    (e) => {
-        if (!canInput) return
+const onMouseMove = (e) => {
+    if (!canInput) return
 
-        const rect = e.target.getBoundingClientRect()
+    console.log("test")
 
-        const center = vec(rect.width / 2, rect.height / 2)
+    const rect = e.target.getBoundingClientRect()
 
-        const cvsWidth = +cvsStyle.width.slice(0, -2)
-        const cvsHeight = +cvsStyle.height.slice(0, -2)
+    const center = vec(rect.width / 2, rect.height / 2)
 
-        const cvsCenter = vec(cvsWidth, cvsHeight).mlt(1 / 2)
+    const cvsWidth = +cvsStyle.width.slice(0, -2)
+    const cvsHeight = +cvsStyle.height.slice(0, -2)
 
-        // console.log(width/cvsWidth)
+    const cvsCenter = vec(cvsWidth, cvsHeight).mlt(1 / 2)
 
-        mouse.p = vec(e.clientX - rect.x, e.clientY - rect.y)
-            .sub(center)
-            .rot(-mouse.angle)
-            .add(cvsCenter)
-            .mlt(width / cvsWidth)
+    // console.log(width/cvsWidth)
 
-        mouse.moved = true
-    },
-    false,
-)
+    mouse.p = vec(e.clientX - rect.x, e.clientY - rect.y)
+        .sub(center)
+        .rot(-mouse.angle)
+        .add(cvsCenter)
+        .mlt(width / cvsWidth)
+
+    mouse.moved = true
+}
+
+container.addEventListener("mousemove", onMouseMove, false)
 
 const mouse = {
     clicking: false,
@@ -123,8 +123,9 @@ container.addEventListener("wheel", (e) => {
     mouse.deltaY = e.deltaY
 })
 
-document.addEventListener("contextmenu", (event) => {
+container.addEventListener("contextmenu", (event) => {
     event.preventDefault()
+    mouse.rightClicked = true
 })
 
 const focusState = {

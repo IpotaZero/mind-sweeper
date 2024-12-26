@@ -15,6 +15,7 @@ const se_select = new Iaudio("sounds/カーソル移動12.mp3")
 const se_ok = new Iaudio("sounds/決定ボタンを押す44.mp3")
 const se_cancel = new Iaudio("sounds/決定ボタンを押す50.mp3")
 const se_open = new Iaudio("sounds/レバーを倒す.mp3")
+const se_MCR = new Iaudio("sounds/MCR.wav").setVolume(0.1)
 
 const bgm_title = new IBGM("sounds/title.mp3")
 const bgm_mine = new IBGM("sounds/mine.mp3")

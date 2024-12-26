@@ -12,6 +12,8 @@ body {
 
     background-color: #111;
     box-shadow: inset 0px 0px 96px -22px #ffffff20;
+
+    -webkit-tap-highlight-color: transparent;
 }
 
 .img77 {
