@@ -94,8 +94,8 @@ container.addEventListener(
             mouse.middleClicked = true
             mouse.middleClicking = true
         } else if (e.button == 2) {
-            mouse.rightClicked = true
-            mouse.rightClicking = true
+            // mouse.rightClicked = true
+            // mouse.rightClicking = true
         }
 
         console.log(mouse.p)
